@@ -62,6 +62,7 @@ contract EventTreasury is AccessControl, ReentrancyGuard {
         address organizer,
         uint256 eventEndTime
     ) external {
+        require(msg.sender == organizer, "Organizer must be the caller");
         require(_events[eventId].organizer == address(0), "Event already exists");
         require(organizer != address(0), "Invalid organizer");
         require(eventEndTime > block.timestamp, "End time must be in the future");

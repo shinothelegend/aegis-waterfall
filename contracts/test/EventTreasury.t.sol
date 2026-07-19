@@ -53,6 +53,7 @@ contract EventTreasuryTest is Test {
         bytes32 newEventId = keccak256("new_event");
         uint256 endTime = block.timestamp + 2 days;
 
+        vm.prank(organizer);
         treasury.createEvent(newEventId, ticketPrice, organizer, endTime);
 
         (uint256 price, address org, uint256 end, bool settled, uint256 bal) = treasury.getEvent(newEventId);
@@ -63,7 +64,17 @@ contract EventTreasuryTest is Test {
         assertEq(bal, 0);
     }
 
+    function test_RevertIfCreateEventByNonOrganizer() public {
+        bytes32 newEventId = keccak256("new_event_fail");
+        uint256 endTime = block.timestamp + 2 days;
+
+        vm.expectRevert("Organizer must be the caller");
+        vm.prank(attendee); // attendee is not the organizer
+        treasury.createEvent(newEventId, ticketPrice, organizer, endTime);
+    }
+
     function testDeposit() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -77,6 +88,7 @@ contract EventTreasuryTest is Test {
     }
 
     function testCheckIn() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -92,6 +104,7 @@ contract EventTreasuryTest is Test {
     }
 
     function testCheckInByAgent() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -106,6 +119,7 @@ contract EventTreasuryTest is Test {
     }
 
     function test_RevertIfCheckInByStranger() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -119,6 +133,7 @@ contract EventTreasuryTest is Test {
     }
 
     function testAutonomousRefund() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -149,6 +164,7 @@ contract EventTreasuryTest is Test {
     }
 
     function test_RevertIfRefundByNonAgent() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -165,6 +181,7 @@ contract EventTreasuryTest is Test {
     }
 
     function testSoulboundNFT() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -185,6 +202,7 @@ contract EventTreasuryTest is Test {
     }
 
     function testSettleEvent() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
@@ -216,6 +234,7 @@ contract EventTreasuryTest is Test {
     }
 
     function test_RevertIfSettleBeforeEndTime() public {
+        vm.prank(organizer);
         treasury.createEvent(eventId, ticketPrice, organizer, eventEndTime);
 
         vm.startPrank(attendee);
