@@ -1,0 +1,33 @@
+name: Solidity Contracts CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Forge Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Run Forge Build
+        run: |
+          cd contracts
+          forge build
+
+      - name: Run Forge Tests
+        run: |
+          cd contracts
+          forge test -vvv
