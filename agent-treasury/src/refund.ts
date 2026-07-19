@@ -41,23 +41,24 @@ export async function processRefund(
   eventId: string,
   attendee: string
 ) {
+  const lowercaseAttendee = attendee.toLowerCase();
   try {
     // 1. Execute LLM-powered Anti-fraud reasoning check
-    const fraudResult = await performFraudCheck(eventId, attendee);
+    const fraudResult = await performFraudCheck(eventId, lowercaseAttendee);
     if (!fraudResult.approved) {
-      console.warn(`[Agent] Refund blocked for attendee ${attendee} due to fraud check rejection!`);
+      console.warn(`[Agent] Refund blocked for attendee ${lowercaseAttendee} due to fraud check rejection!`);
       
       // Update RSVP status in Supabase to flagged
       await supabase
         .from("rsvps")
         .update({ status: "flagged_fraud", updated_at: new Date().toISOString() })
-        .match({ event_id: eventId, attendee });
+        .match({ event_id: eventId, attendee: lowercaseAttendee });
 
       // Log decision in Supabase
       await supabase.from("agent_decisions").insert({
         event_id: eventId,
         trigger_type: "check_in",
-        target_address: attendee,
+        target_address: lowercaseAttendee,
         decision: "rejected",
         reasoning: `Anti-fraud check REJECTED check-in refund. Reason: ${fraudResult.reasoning}`
       });
@@ -119,28 +120,28 @@ export async function processRefund(
     await supabase
       .from("rsvps")
       .update({ status: "refunded", tx_hash: txHash, updated_at: new Date().toISOString() })
-      .match({ event_id: eventId, attendee });
+      .match({ event_id: eventId, attendee: lowercaseAttendee });
 
     // Log decision in Supabase
     await supabase.from("agent_decisions").insert({
       event_id: eventId,
       trigger_type: "check_in",
-      target_address: attendee,
+      target_address: lowercaseAttendee,
       decision: "processed",
       reasoning: `Autonomous refund approved. ${fraudResult.reasoning} SBT Attestation #${tokenIdStr || "N/A"} minted and updated with refund transaction hash.`,
       tx_hash: txHash
     });
 
-    console.log(`[Agent] Refund successfully completed for ${attendee}`);
+    console.log(`[Agent] Refund successfully completed for ${lowercaseAttendee}`);
 
   } catch (error: any) {
-    console.error(`[Agent] Error processing refund for ${attendee}:`, error.message || error);
+    console.error(`[Agent] Error processing refund for ${lowercaseAttendee}:`, error.message || error);
     
     // Log failed decision
     await supabase.from("agent_decisions").insert({
       event_id: eventId,
       trigger_type: "check_in",
-      target_address: attendee,
+      target_address: lowercaseAttendee,
       decision: "failed",
       reasoning: `Failed to execute refund: ${error.message || error}`,
     });

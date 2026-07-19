@@ -14,13 +14,14 @@ export async function performFraudCheck(
   eventId: string,
   attendee: string
 ): Promise<FraudCheckResult> {
-  console.log(`[Anti-Fraud] Analyzing check-in pattern for attendee: ${attendee} at event: ${eventId}...`);
+  const lowercaseAttendee = attendee.toLowerCase();
+  console.log(`[Anti-Fraud] Analyzing check-in pattern for attendee: ${lowercaseAttendee} at event: ${eventId}...`);
   try {
     // 1. Check if the attendee has a matching deposit record in Supabase rsvps table
     const { data: rsvp, error: rsvpError } = await supabase
       .from("rsvps")
       .select("status, tx_hash")
-      .match({ event_id: eventId, attendee })
+      .match({ event_id: eventId, attendee: lowercaseAttendee })
       .maybeSingle();
 
     if (rsvpError) throw rsvpError;
@@ -36,7 +37,7 @@ export async function performFraudCheck(
     const { data: recentDecisions, error: decError } = await supabase
       .from("agent_decisions")
       .select("event_id, trigger_type, decision, created_at")
-      .eq("target_address", attendee)
+      .eq("target_address", lowercaseAttendee)
       .order("created_at", { ascending: false })
       .limit(5);
 
@@ -50,7 +51,7 @@ export async function performFraudCheck(
     const prompt = `You are a fraud prevention AI Agent running Checkpoint, an escrow and payments platform.
 You are evaluating a check-in event to decide if a ticket refund should be processed or blocked as fraudulent/suspicious.
 
-Attendee Address: "${attendee}"
+Attendee Address: "${lowercaseAttendee}"
 Current Event ID: "${eventId}"
 Has RSVP Deposit: Yes (Tx: ${rsvp.tx_hash || "N/A"})
 

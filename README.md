@@ -53,11 +53,16 @@ Our contracts are written in Solidity, compiled using **Solc 0.8.24** and optimi
 - **`CheckInAttestation.sol`**: Soulbound NFT (ERC-721) minted during attendee refund. Generates interactive base64-encoded SVG metadata on-chain to provide immutable check-in audit trails.
 
 ### Deployed Testnet Addresses
-*   **EventTreasury.sol**: `0xPLACEHOLDER_TREASURY_ADDRESS`
-*   **CheckInAttestation.sol**: `0xPLACEHOLDER_ATTESTATION_ADDRESS`
-*   **Canonical USDC (Arc Testnet)**: `0x3600000000000000000000000000000000000000`
+*   **EventTreasury.sol**: `0x4226F8f9260e1CeD622ebCb0FbE226Bbc5fFe515`
+*   **CheckInAttestation.sol**: `0x6758396C5Cc75D0437CfC9F74B7Bfd409193B559`
+*   **MockUSDC (Arc Testnet)**: `0x83a0e65D01198133DEa1d6A5f9292A04D7d88371`
+*   **Agent Wallet Address**: `0x59e096c540e1ec640bd203012b8525d9fe04eccf`
 
----
+### Proof of Autonomy (Live Evidence)
+The following are verified Arc Testnet transaction hashes entirely initiated, evaluated, and executed by the Autonomous Agent's backend without any human intervention or browser-based payload signature:
+*   **Autonomous Refund execution (`refund`)**: `0xc190b272f4fc07a363dbe0002c1c1525539ed7da07e301e5075f2bb681c66acd`
+*   **Autonomous Metadata write to SBT (`setRefundTxHash`)**: `0xa080af1b35bd79ab5c75aec3b38a0f88867c77b0efc51ac90cefec1e7fb3d8b2`
+
 
 ## 🤖 How the Agent Acts With No Human In The Loop
 

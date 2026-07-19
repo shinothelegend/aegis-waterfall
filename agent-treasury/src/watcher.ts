@@ -22,8 +22,9 @@ export function startWatchers(agentConfig: AgentConfig) {
     eventName: "CheckedIn",
     onLogs: async (logs) => {
       for (const log of logs) {
-        const { eventId, attendee } = log.args;
-        if (eventId && attendee) {
+        const { eventId, attendee: rawAttendee } = log.args;
+        if (eventId && rawAttendee) {
+          const attendee = rawAttendee.toLowerCase();
           console.log(`[Agent] Real-time CheckedIn event detected: EventId=${eventId}, Attendee=${attendee}`);
           
           // Check if already refunded in Supabase first to prevent duplicate trigger
@@ -55,8 +56,9 @@ export function startWatchers(agentConfig: AgentConfig) {
       "postgres_changes",
       { event: "UPDATE", schema: "public", table: "rsvps" },
       async (payload) => {
-        const { event_id, attendee, status } = payload.new;
-        if (status === "checked_in") {
+        const { event_id, attendee: rawAttendee, status } = payload.new;
+        if (status === "checked_in" && rawAttendee) {
+          const attendee = rawAttendee.toLowerCase();
           console.log(`[Agent] Supabase check-in trigger: EventId=${event_id}, Attendee=${attendee}`);
           // Verify on-chain status first
           const isRefunded = await publicClient.readContract({
