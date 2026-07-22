@@ -441,50 +441,58 @@ export default function App() {
 
           {/* VIEW: DASHBOARD */}
           {currentView === 'dashboard' && (
-            <Dashboard
-              events={events}
-              decisions={decisions}
-              invoices={invoices}
-              rsvps={rsvps}
-              selectedEventId={selectedEventId}
-              manualAttendeeAddress=""
-              onSelectEvent={setSelectedEventId}
-              onCheckIn={handleCheckIn}
-              onCreateEvent={handleCreateEvent}
-            />
+            <div className="animate-fade-in-up">
+              <Dashboard
+                events={events}
+                decisions={decisions}
+                invoices={invoices}
+                rsvps={rsvps}
+                selectedEventId={selectedEventId}
+                manualAttendeeAddress=""
+                onSelectEvent={setSelectedEventId}
+                onCheckIn={handleCheckIn}
+                onCreateEvent={handleCreateEvent}
+              />
+            </div>
           )}
 
           {/* VIEW: EVENTS CATALOG */}
           {currentView === 'events' && (
-            <Events
-              events={events}
-              selectedEventId={selectedEventId}
-              onSelectEvent={setSelectedEventId}
-              isConnected={isConnected}
-              userAddress={userAddress}
-              onChainEvent={onChainEvent}
-              hasDeposited={!!hasDeposited}
-              hasCheckedIn={!!hasCheckedIn}
-              hasRefunded={!!hasRefunded}
-              usdcAllowance={usdcAllowance}
-              rsvps={rsvps}
-              onDeposit={handleDeposit}
-              onUploadInvoice={handleUploadInvoice}
-            />
+            <div className="animate-fade-in-up">
+              <Events
+                events={events}
+                selectedEventId={selectedEventId}
+                onSelectEvent={setSelectedEventId}
+                isConnected={isConnected}
+                userAddress={userAddress}
+                onChainEvent={onChainEvent}
+                hasDeposited={!!hasDeposited}
+                hasCheckedIn={!!hasCheckedIn}
+                hasRefunded={!!hasRefunded}
+                usdcAllowance={usdcAllowance}
+                rsvps={rsvps}
+                onDeposit={handleDeposit}
+                onUploadInvoice={handleUploadInvoice}
+              />
+            </div>
           )}
 
           {/* VIEW: PAYOUT SETTLEMENTS */}
           {currentView === 'treasury' && (
-            <Treasury events={events} rsvps={rsvps} />
+            <div className="animate-fade-in-up">
+              <Treasury events={events} rsvps={rsvps} />
+            </div>
           )}
 
           {/* VIEW: SBT BADGE GALLERY */}
           {currentView === 'audit' && (
-            <Audit 
-              attestationAddress={attestationAddress} 
-              loadingBadges={loadingBadges} 
-              badges={badges} 
-            />
+            <div className="animate-fade-in-up">
+              <Audit 
+                attestationAddress={attestationAddress} 
+                loadingBadges={loadingBadges} 
+                badges={badges} 
+              />
+            </div>
           )}
 
         </main>

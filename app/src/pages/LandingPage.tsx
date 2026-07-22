@@ -16,8 +16,17 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
   // Ref for scroll animation triggers
   const heroRef = useRef<HTMLDivElement>(null);
   const waterfallRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>(null);
+  const howItWorksRef = useRef<HTMLDivElement>(null);
+  const docsRef = useRef<HTMLDivElement>(null);
+  const communityRef = useRef<HTMLDivElement>(null);
+
   const [heroVisible, setHeroVisible] = useState(false);
   const [waterfallVisible, setWaterfallVisible] = useState(false);
+  const [productVisible, setProductVisible] = useState(false);
+  const [howItWorksVisible, setHowItWorksVisible] = useState(false);
+  const [docsVisible, setDocsVisible] = useState(false);
+  const [communityVisible, setCommunityVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,27 +47,55 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
 
     const heroObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setHeroVisible(true);
-        }
+        if (entry.isIntersecting) setHeroVisible(true);
       });
     }, observerOptions);
 
     const waterfallObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setWaterfallVisible(true);
-        }
+        if (entry.isIntersecting) setWaterfallVisible(true);
+      });
+    }, observerOptions);
+
+    const productObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setProductVisible(true);
+      });
+    }, observerOptions);
+
+    const howItWorksObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setHowItWorksVisible(true);
+      });
+    }, observerOptions);
+
+    const docsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setDocsVisible(true);
+      });
+    }, observerOptions);
+
+    const communityObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setCommunityVisible(true);
       });
     }, observerOptions);
 
     if (heroRef.current) heroObserver.observe(heroRef.current);
     if (waterfallRef.current) waterfallObserver.observe(waterfallRef.current);
+    if (productRef.current) productObserver.observe(productRef.current);
+    if (howItWorksRef.current) howItWorksObserver.observe(howItWorksRef.current);
+    if (docsRef.current) docsObserver.observe(docsRef.current);
+    if (communityRef.current) communityObserver.observe(communityRef.current);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       heroObserver.disconnect();
       waterfallObserver.disconnect();
+      productObserver.disconnect();
+      howItWorksObserver.disconnect();
+      docsObserver.disconnect();
+      communityObserver.disconnect();
     };
   }, []);
 
@@ -692,9 +729,11 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
       </section>
 
       {/* PRODUCT FEATURES SECTION */}
-      <section id="product" className="py-24 bg-white border-y border-slate-200/50">
+      <section ref={productRef} id="product" className="py-24 bg-white border-y border-slate-200/50">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="max-w-3xl mx-auto text-center mb-20">
+          <div className={`max-w-3xl mx-auto text-center mb-20 transition-all duration-1000 ease-out transform ${
+            productVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             <span className="font-brand-mono text-xs font-semibold text-cyan-600 tracking-widest uppercase">Autonomous Escrow Agent</span>
             <h2 className="font-serif-fancy text-4xl sm:text-5xl text-slate-900 mt-2 font-normal">
               Eliminate Counterparty Risk with Decentralized Settlements
@@ -706,9 +745,11 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200/50 hover:shadow-xl hover:shadow-cyan-500/5 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Shield className="w-6 h-6" />
+            <div className={`p-8 rounded-2xl bg-slate-50 border border-slate-200/50 hover:shadow-2xl hover:shadow-cyan-500/5 hover:-translate-y-2 transition-all duration-500 ease-out transform group ${
+              productVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}>
+              <div className="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                <Shield className="w-6 h-6 animate-pulse" />
               </div>
               <h3 className="font-brand-mono text-base font-semibold text-slate-900">Autonomous Escrow</h3>
               <p className="font-outfit text-sm text-slate-600 mt-3 leading-relaxed">
@@ -717,8 +758,10 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
             </div>
 
             {/* Card 2 */}
-            <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200/50 hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div className={`p-8 rounded-2xl bg-slate-50 border border-slate-200/50 hover:shadow-2xl hover:shadow-purple-500/5 hover:-translate-y-2 transition-all duration-500 ease-out transform delay-150 group ${
+              productVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}>
+              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
                 <Zap className="w-6 h-6" />
               </div>
               <h3 className="font-brand-mono text-base font-semibold text-slate-900">Instant Settlements</h3>
@@ -728,8 +771,10 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
             </div>
 
             {/* Card 3 */}
-            <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200/50 hover:shadow-xl hover:shadow-cyan-500/5 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div className={`p-8 rounded-2xl bg-slate-50 border border-slate-200/50 hover:shadow-2xl hover:shadow-cyan-500/5 hover:-translate-y-2 transition-all duration-500 ease-out transform delay-300 group ${
+              productVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}>
+              <div className="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
                 <Cpu className="w-6 h-6" />
               </div>
               <h3 className="font-brand-mono text-base font-semibold text-slate-900">AI-Controlled Treasury</h3>
@@ -742,11 +787,13 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
       </section>
 
       {/* HOW IT WORKS SECTION */}
-      <section id="how-it-works" className="py-24 bg-slate-50">
+      <section ref={howItWorksRef} id="how-it-works" className="py-24 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             {/* Left Content */}
-            <div className="lg:col-span-5">
+            <div className={`lg:col-span-5 transition-all duration-1000 ease-out transform ${
+              howItWorksVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+            }`}>
               <span className="font-brand-mono text-xs font-semibold text-cyan-600 tracking-widest uppercase">Operational Pipeline</span>
               <h2 className="font-serif-fancy text-4xl sm:text-5xl text-slate-900 mt-2 font-normal">
                 How Aegis Waterfall Secures Transactions
@@ -758,48 +805,59 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
               <div className="mt-8 flex flex-col gap-4 font-brand-mono text-xs">
                 <button 
                   onClick={() => setActiveTab('create')}
-                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all duration-200 ${
+                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all duration-300 transform hover:translate-x-2 ${
                     activeTab === 'create' 
-                      ? 'bg-slate-900 text-white border-slate-900 shadow-lg' 
-                      : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-xl' 
+                      : 'bg-white text-slate-700 border-slate-200 hover:border-cyan-300/80 hover:bg-cyan-50/20'
                   }`}
                 >
-                  <span>1. Escrow Creation</span>
+                  <span className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${activeTab === 'create' ? 'bg-cyan-400' : 'bg-slate-300'}`}></span>
+                    1. Escrow Creation
+                  </span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={() => setActiveTab('deposit')}
-                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all duration-200 ${
+                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all duration-300 transform hover:translate-x-2 ${
                     activeTab === 'deposit' 
-                      ? 'bg-slate-900 text-white border-slate-900 shadow-lg' 
-                      : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-xl' 
+                      : 'bg-white text-slate-700 border-slate-200 hover:border-purple-300/80 hover:bg-purple-50/20'
                   }`}
                 >
-                  <span>2. Attendee RSVPs & Deposits</span>
+                  <span className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${activeTab === 'deposit' ? 'bg-purple-400' : 'bg-slate-300'}`}></span>
+                    2. Attendee RSVPs & Deposits
+                  </span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
                 <button 
                   onClick={() => setActiveTab('settle')}
-                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all duration-200 ${
+                  className={`w-full text-left p-4 rounded-xl border flex items-center justify-between transition-all duration-300 transform hover:translate-x-2 ${
                     activeTab === 'settle' 
-                      ? 'bg-slate-900 text-white border-slate-900 shadow-lg' 
-                      : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-xl' 
+                      : 'bg-white text-slate-700 border-slate-200 hover:border-cyan-300/80 hover:bg-cyan-50/20'
                   }`}
                 >
-                  <span>3. Verification & Payout</span>
+                  <span className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${activeTab === 'settle' ? 'bg-cyan-400' : 'bg-slate-300'}`}></span>
+                    3. Verification & Payout
+                  </span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Right Showcase Box */}
-            <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-200 p-8 shadow-xl relative min-h-[350px] flex flex-col justify-between">
+            <div className={`lg:col-span-7 bg-white rounded-3xl border border-slate-200 p-8 shadow-2xl relative min-h-[350px] flex flex-col justify-between transition-all duration-1000 ease-out transform delay-200 ${
+              howItWorksVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+            }`}>
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-t-3xl"></div>
               
               {activeTab === 'create' && (
                 <div className="animate-fadeIn">
                   <div className="flex items-center gap-3 text-cyan-600 mb-6">
-                    <Layers className="w-6 h-6" />
+                    <Layers className="w-6 h-6 animate-bounce" />
                     <span className="font-brand-mono text-xs font-bold uppercase tracking-wider">Milestone 1</span>
                   </div>
                   <h3 className="font-serif-fancy text-2xl text-slate-900 font-semibold">Deploy Escrow to Arc Testnet</h3>
@@ -820,7 +878,7 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
               {activeTab === 'deposit' && (
                 <div className="animate-fadeIn">
                   <div className="flex items-center gap-3 text-purple-600 mb-6">
-                    <RefreshCw className="w-6 h-6" />
+                    <RefreshCw className="w-6 h-6 animate-spin" style={{ animationDuration: '3s' }} />
                     <span className="font-brand-mono text-xs font-bold uppercase tracking-wider">Milestone 2</span>
                   </div>
                   <h3 className="font-serif-fancy text-2xl text-slate-900 font-semibold">USDC Deposit Locking</h3>
@@ -841,7 +899,7 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
               {activeTab === 'settle' && (
                 <div className="animate-fadeIn">
                   <div className="flex items-center gap-3 text-cyan-600 mb-6">
-                    <Sparkles className="w-6 h-6" />
+                    <Sparkles className="w-6 h-6 animate-pulse" />
                     <span className="font-brand-mono text-xs font-bold uppercase tracking-wider">Milestone 3</span>
                   </div>
                   <h3 className="font-serif-fancy text-2xl text-slate-900 font-semibold">Attestation and Auto-Payout</h3>
@@ -863,7 +921,7 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
                 <span className="font-brand-mono text-[10px] text-slate-400">STATUS: CORE PIPELINE VERIFIED</span>
                 <button 
                   onClick={onLaunchApp}
-                  className="font-brand-mono text-xs font-semibold px-4 py-2 rounded bg-slate-900 text-white hover:bg-slate-800 transition-colors flex items-center gap-1.5"
+                  className="font-brand-mono text-xs font-semibold px-5 py-2.5 rounded bg-slate-950 text-white hover:bg-slate-900 active:scale-95 transition-all flex items-center gap-1.5 shadow-md shadow-slate-950/10"
                 >
                   Test On-Chain Flow
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -875,9 +933,11 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
       </section>
 
       {/* TECHNICAL STACK SECTION */}
-      <section id="docs" className="py-24 bg-white border-t border-slate-200/50">
+      <section ref={docsRef} id="docs" className="py-24 bg-white border-t border-slate-200/50">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 transition-all duration-1000 ease-out transform ${
+            docsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             <span className="font-brand-mono text-xs font-semibold text-cyan-600 tracking-widest uppercase">Developers & Core Infrastructure</span>
             <h2 className="font-serif-fancy text-3xl sm:text-4xl text-slate-900 mt-2 font-normal">
               Built on Modern Web3 Primitives
@@ -885,19 +945,27 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center">
+            <div className={`p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center hover:bg-slate-100/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 transform ${
+              docsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
               <span className="font-brand-mono text-lg font-bold text-slate-800">Arc Network</span>
               <p className="font-outfit text-xs text-slate-500 mt-2">Ultra-fast EVM testnet for gasless programmability</p>
             </div>
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center">
+            <div className={`p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center hover:bg-slate-100/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 transform delay-100 ${
+              docsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
               <span className="font-brand-mono text-lg font-bold text-slate-800">EAS Protocols</span>
               <p className="font-outfit text-xs text-slate-500 mt-2">Cryptographic check-in receipt attestations</p>
             </div>
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center">
+            <div className={`p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center hover:bg-slate-100/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 transform delay-200 ${
+              docsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
               <span className="font-brand-mono text-lg font-bold text-slate-800">SBT Gallery</span>
               <p className="font-outfit text-xs text-slate-500 mt-2">Verifiable soulbound badges for on-chain identity</p>
             </div>
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center">
+            <div className={`p-6 rounded-2xl bg-slate-50 border border-slate-200/50 text-center hover:bg-slate-100/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 transform delay-300 ${
+              docsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}>
               <span className="font-brand-mono text-lg font-bold text-slate-800">Supabase DB</span>
               <p className="font-outfit text-xs text-slate-500 mt-2">Realtime sync, secure schema storage and audits</p>
             </div>
@@ -906,12 +974,14 @@ export function LandingPage({ onLaunchApp, isConnected }: LandingPageProps) {
       </section>
 
       {/* COMMUNITY CALL-TO-ACTION */}
-      <section id="community" className="py-24 bg-gradient-to-tr from-slate-900 to-slate-950 text-white relative overflow-hidden">
+      <section ref={communityRef} id="community" className="py-24 bg-gradient-to-tr from-slate-900 to-slate-950 text-white relative overflow-hidden">
         {/* Subtle glowing lights in background */}
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
         
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div className={`max-w-4xl mx-auto px-6 text-center relative z-10 transition-all duration-1000 ease-out transform ${
+          communityVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`}>
           <h2 className="font-serif-fancy text-4xl sm:text-5xl font-normal text-white">
             Ready to experience the future of <span className="italic font-light text-cyan-400">programmable capital</span>?
           </h2>
