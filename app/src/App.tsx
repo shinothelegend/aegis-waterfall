@@ -14,6 +14,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Events } from './pages/Events';
 import { Treasury } from './pages/Treasury';
 import { Audit } from './pages/Audit';
+import { LandingPage } from './pages/LandingPage';
 import { useCheckpointData } from './hooks/useCheckpointData';
 
 // Canonical USDC Address on Arc Testnet
@@ -125,11 +126,11 @@ const ERC20_ABI = [
   }
 ] as const;
 
-type ViewType = 'dashboard' | 'events' | 'treasury' | 'audit';
+type ViewType = 'landing' | 'dashboard' | 'events' | 'treasury' | 'audit';
 
 export default function App() {
   const { address: userAddress, isConnected } = useAccount();
-  const [currentView, setCurrentView] = useState<ViewType>('dashboard');
+  const [currentView, setCurrentView] = useState<ViewType>('landing');
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
 
   // Address Settings (Persistent in localStorage)
@@ -369,12 +370,21 @@ export default function App() {
     });
   };
 
+  if (currentView === 'landing') {
+    return (
+      <LandingPage 
+        onLaunchApp={() => setCurrentView('dashboard')}
+        isConnected={isConnected}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-[#e4e1e7] flex flex-col font-mono antialiased">
       <Toaster position="bottom-right" />
       
       {/* Navbar */}
-      <Navbar onSync={fetchData} />
+      <Navbar onSync={fetchData} onNavigateToLanding={() => setCurrentView('landing')} />
 
       {/* Contract Settings Section */}
       <div className="bg-[#0e0e12]/90 backdrop-blur border-b border-white/10 py-3 fixed top-16 w-full z-40 text-xs">
