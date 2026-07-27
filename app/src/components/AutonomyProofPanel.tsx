@@ -87,18 +87,18 @@ export function AutonomyProofPanel({ selectedEventId, rsvps, userAddress }: Auto
 
       <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
         <div>
-          <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+          <h3 className="font-mono text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
             <span className="material-symbols-outlined text-cyan-400 text-sm">route</span>
             Escrow Autonomy Pipeline
           </h3>
-          <p className="text-[10px] text-slate-500 font-mono mt-0.5">Live tracking: {activeRsvp ? `${rsvpAddr.substring(0, 8)}...` : "Demo Mode"}</p>
+          <p className="text-xs text-slate-400 font-mono mt-0.5">Live tracking: {activeRsvp ? `${rsvpAddr.substring(0, 8)}...` : "Demo Mode"}</p>
         </div>
         <div className="flex items-center gap-1.5 bg-[#050508] px-2 py-0.5 rounded border border-cyan-500/20">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span>
           </span>
-          <span className="font-mono text-[9px] text-cyan-400 uppercase font-bold">DAEMON LOGGED</span>
+          <span className="font-mono text-[11px] text-cyan-400 uppercase font-bold">DAEMON LOGGED</span>
         </div>
       </div>
 
@@ -143,32 +143,32 @@ export function AutonomyProofPanel({ selectedEventId, rsvps, userAddress }: Auto
               {/* Stepper content */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h4 className={`text-xs font-mono font-bold ${isActive ? 'text-white' : isCompleted ? 'text-slate-300' : 'text-slate-600'}`}>
+                  <h4 className={`text-sm font-mono font-bold ${isActive ? 'text-white' : isCompleted ? 'text-slate-200' : 'text-slate-500'}`}>
                     {step.title}
                   </h4>
                   {isActive && (
-                    <span className={`px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider ${
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider ${
                       step.id === 2 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
                     }`}>
                       {step.badge}
                     </span>
                   )}
                   {isCompleted && (
-                    <span className="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider bg-cyan-950/30 text-cyan-400 border border-cyan-800/20">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider bg-cyan-950/30 text-cyan-400 border border-cyan-800/20">
                       Executed
                     </span>
                   )}
                 </div>
-                <p className="text-[10px] text-slate-500 mt-0.5 leading-relaxed font-sans">
+                <p className="text-xs text-slate-400 mt-1 leading-relaxed font-sans">
                   {step.desc}
                 </p>
                 {step.id === 0 && activeRsvp && (
-                  <div className="mt-1 font-mono text-[9px] text-cyan-400/80 truncate">
+                  <div className="mt-1.5 font-mono text-[11px] md:text-xs text-cyan-400/80 truncate">
                     Escrow: {activeRsvp.status} | Tx: {depositTx ? `${depositTx.substring(0, 14)}...` : 'Pending'}
                   </div>
                 )}
                 {step.id === 2 && isCompleted && (
-                  <div className="mt-1 font-mono text-[9px] text-amber-400/80">
+                  <div className="mt-1.5 font-mono text-[11px] md:text-xs text-amber-400/80">
                     Agent Signature Verified
                   </div>
                 )}
@@ -179,19 +179,19 @@ export function AutonomyProofPanel({ selectedEventId, rsvps, userAddress }: Auto
       </div>
 
       {/* Agent details */}
-      <div className="mt-4 pt-4 border-t border-white/5 bg-[#050508]/60 p-3 rounded-lg flex items-center justify-between text-[10px] font-mono">
+      <div className="mt-4 pt-4 border-t border-white/5 bg-[#050508]/60 p-3.5 rounded-lg flex items-center justify-between text-xs font-mono">
         <div className="min-w-0">
-          <div className="flex items-center gap-1">
-            <span className="material-symbols-outlined text-[12px] text-cyan-400">lock_open</span>
-            <span className="text-slate-400 font-bold uppercase tracking-wider text-[9px]">AGENT CONTRACT SIGNER</span>
+          <div className="flex items-center gap-1.5">
+            <span className="material-symbols-outlined text-[13px] text-cyan-400">lock_open</span>
+            <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">AGENT CONTRACT SIGNER</span>
           </div>
-          <p className="text-slate-300 truncate w-40 md:w-56 mt-0.5">{agentWallet}</p>
+          <p className="text-slate-200 truncate w-40 md:w-56 mt-1 text-[11px] md:text-xs">{agentWallet}</p>
         </div>
         <button 
           onClick={handleCopyAgentWallet}
-          className="bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-1 rounded text-slate-300 flex items-center gap-1 active:scale-95 transition-all text-[9px]"
+          className="bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1.5 rounded text-slate-300 flex items-center gap-1.5 active:scale-95 transition-all text-[10px] md:text-xs"
         >
-          <span className="material-symbols-outlined text-[11px]">{copied ? 'done' : 'content_copy'}</span>
+          <span className="material-symbols-outlined text-xs md:text-sm">{copied ? 'done' : 'content_copy'}</span>
           {copied ? 'Copied' : 'Copy'}
         </button>
       </div>

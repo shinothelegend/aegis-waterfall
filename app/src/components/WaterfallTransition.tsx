@@ -199,25 +199,25 @@ export function WaterfallTransition({ phase, onHalfway, onComplete }: WaterfallT
           if (p.angle !== undefined) ctx.rotate(p.angle);
           ctx.scale(p.scale || 1, p.scale || 1);
 
-          // Coin outer circle
+          // Coin outer circle (increased size)
           ctx.strokeStyle = `${p.color}${currentOpacity})`;
-          ctx.lineWidth = 2;
+          ctx.lineWidth = 2.5;
           ctx.fillStyle = `rgba(5, 8, 20, ${currentOpacity * 0.9})`;
           ctx.beginPath();
-          ctx.arc(0, 0, 16, 0, Math.PI * 2);
+          ctx.arc(0, 0, 26, 0, Math.PI * 2); // increased radius from 16 to 26
           ctx.fill();
           ctx.stroke();
 
-          // Inner ring
+          // Inner ring (increased size)
           ctx.strokeStyle = `${p.color}${currentOpacity * 0.4})`;
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.arc(0, 0, 12, 0, Math.PI * 2);
+          ctx.arc(0, 0, 19, 0, Math.PI * 2); // increased radius from 12 to 19
           ctx.stroke();
 
-          // S/$ symbol
+          // S/$ symbol (increased size)
           ctx.fillStyle = `${p.color}${currentOpacity * 1.2})`;
-          ctx.font = 'bold 12px monospace';
+          ctx.font = 'bold 18px monospace'; // increased from 12px
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText('$', 0, 0);
@@ -225,24 +225,24 @@ export function WaterfallTransition({ phase, onHalfway, onComplete }: WaterfallT
           ctx.restore();
         } 
         else if (p.type === 'text' && p.value) {
-          // Floating fintech status words
+          // Floating fintech status words (increased size and bolded)
           ctx.save();
-          ctx.font = '9px "Space Grotesk", "Space Mono", monospace';
+          ctx.font = 'bold 14px "Space Grotesk", "Space Mono", monospace'; // increased from 9px
           ctx.fillStyle = `${p.color}${currentOpacity * 0.9})`;
           ctx.textAlign = 'center';
           
           // Draw outline glow
-          ctx.shadowColor = 'rgba(255, 255, 255, 0.2)';
-          ctx.shadowBlur = 4;
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.3)';
+          ctx.shadowBlur = 6;
           
           ctx.fillText(p.value, p.x, p.y);
           ctx.restore();
         } 
         else if (p.type === 'hash' && p.value) {
-          // Small hex transactions
+          // Small hex transactions (increased size)
           ctx.save();
-          ctx.font = '8px monospace';
-          ctx.fillStyle = `${p.color}${currentOpacity * 0.6})`;
+          ctx.font = '11px monospace'; // increased from 8px
+          ctx.fillStyle = `${p.color}${currentOpacity * 0.75})`;
           ctx.fillText(p.value, p.x, p.y);
           ctx.restore();
         }
@@ -320,30 +320,30 @@ export function WaterfallTransition({ phase, onHalfway, onComplete }: WaterfallT
             >
               {/* Waterfall Shield Indicator */}
               <div className="relative">
-                <div className="w-16 h-16 rounded-full bg-cyan-950/80 border border-cyan-500/50 flex items-center justify-center animate-pulse glow-cyan-sm">
-                  <span className="material-symbols-outlined text-cyan-400 text-3xl animate-bounce">
+                <div className="w-24 h-24 rounded-full bg-cyan-950/80 border border-cyan-500/50 flex items-center justify-center animate-pulse glow-cyan-sm">
+                  <span className="material-symbols-outlined text-cyan-400 text-5xl animate-bounce">
                     waterfall_chart
                   </span>
                 </div>
-                {/* Dynamic circular orbit rings */}
-                <div className="absolute inset-[-8px] border border-cyan-500/20 rounded-full animate-[spin_6s_linear_infinite]" />
-                <div className="absolute inset-[-16px] border border-cyan-500/10 rounded-full animate-[spin_12s_linear_infinite_reverse] border-dashed" />
+                {/* Dynamic circular orbit rings (increased size) */}
+                <div className="absolute inset-[-12px] border border-cyan-500/20 rounded-full animate-[spin_6s_linear_infinite]" />
+                <div className="absolute inset-[-24px] border border-cyan-500/10 rounded-full animate-[spin_12s_linear_infinite_reverse] border-dashed" />
               </div>
 
               {/* Text Messaging */}
-              <div className="space-y-2">
-                <h3 className="text-sm font-bold tracking-[0.25em] text-white uppercase font-display">
+              <div className="space-y-3">
+                <h3 className="text-xl md:text-2xl font-bold tracking-[0.3em] text-white uppercase font-display text-glow-cyan">
                   Aegis Escrow Engine
                 </h3>
-                <p className="text-[11px] text-cyan-400 font-mono tracking-wider animate-pulse">
+                <p className="text-sm md:text-base text-cyan-300 font-mono tracking-widest font-extrabold animate-pulse">
                   {phase === 'cascading' 
                     ? 'STREAMING VALUE ESCROWS...' 
                     : 'AEGIS AGENT SYNCHRONIZED ✓'}
                 </p>
               </div>
 
-              {/* Progress bar mimicking network handshake */}
-              <div className="w-48 h-[2px] bg-cyan-950 border border-cyan-900 rounded-full overflow-hidden relative">
+              {/* Progress bar mimicking network handshake (increased size) */}
+              <div className="w-72 h-[4px] bg-cyan-950 border border-cyan-900 rounded-full overflow-hidden relative">
                 <motion.div
                   initial={{ left: '-100%' }}
                   animate={{ left: phase === 'cascading' ? '0%' : '100%' }}
@@ -352,7 +352,7 @@ export function WaterfallTransition({ phase, onHalfway, onComplete }: WaterfallT
                 />
               </div>
 
-              <div className="text-[9px] text-slate-500 font-mono tracking-widest max-w-[280px]">
+              <div className="text-[11px] md:text-xs text-slate-400 font-mono tracking-widest max-w-[340px]">
                 {phase === 'cascading' 
                   ? 'VERIFYING STABLECOIN DEPOSIT CHANNELS...'
                   : 'LOADING MISSION CONTROL INTERFACE...'}

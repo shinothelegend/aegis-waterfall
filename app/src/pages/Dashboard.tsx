@@ -70,60 +70,60 @@ export function Dashboard({
         {/* Treasury metrics grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Card 1: Locked Escrow */}
-          <div className="glass-panel rounded-xl p-5 border border-cyan-500/10 shadow-[0_4px_20px_rgba(6,182,212,0.05)] relative overflow-hidden group">
+          <div className="glass-panel rounded-xl p-6 border border-cyan-500/10 shadow-[0_4px_20px_rgba(6,182,212,0.05)] relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500/20 via-cyan-500 to-cyan-500/20"></div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+              <h4 className="text-xs md:text-sm font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
                 Escrowed USDC
               </h4>
-              <span className="material-symbols-outlined text-cyan-400 text-sm">lock</span>
+              <span className="material-symbols-outlined text-cyan-400 text-base">lock</span>
             </div>
-            <div className="mt-3">
-              <span className="text-3xl font-extrabold text-white text-glow-cyan">
+            <div className="mt-4">
+              <span className="text-4xl font-extrabold text-white text-glow-cyan">
                 <AnimatedNumber value={totalEscrowed} />
               </span>
-              <span className="text-[10px] text-slate-500 ml-1.5 font-mono uppercase">LOCKED</span>
+              <span className="text-xs text-slate-400 ml-2 font-mono uppercase font-bold">LOCKED</span>
             </div>
-            <p className="text-[9px] text-slate-500 mt-2 font-mono">Held in treasury, pending check-in refund</p>
+            <p className="text-xs text-slate-500 mt-3 font-mono leading-relaxed">Held in treasury, pending check-in refund</p>
           </div>
 
           {/* Card 2: Refunded */}
-          <div className="glass-panel rounded-xl p-5 border border-emerald-500/10 shadow-[0_4px_20px_rgba(16,185,129,0.05)] relative overflow-hidden group">
+          <div className="glass-panel rounded-xl p-6 border border-emerald-500/10 shadow-[0_4px_20px_rgba(16,185,129,0.05)] relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-500/20 via-emerald-500 to-emerald-500/20"></div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <h4 className="text-xs md:text-sm font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
                 Refunded USDC
               </h4>
-              <span className="material-symbols-outlined text-emerald-400 text-sm">assignment_return</span>
+              <span className="material-symbols-outlined text-emerald-400 text-base">assignment_return</span>
             </div>
-            <div className="mt-3">
-              <span className="text-3xl font-extrabold text-white text-glow-cyan" style={{ textShadow: "0 0 10px rgba(16,185,129,0.5)" }}>
+            <div className="mt-4">
+              <span className="text-4xl font-extrabold text-white text-glow-cyan" style={{ textShadow: "0 0 10px rgba(16,185,129,0.5)" }}>
                 <AnimatedNumber value={totalRefunded} />
               </span>
-              <span className="text-[10px] text-slate-500 ml-1.5 font-mono uppercase">Disbursed</span>
+              <span className="text-xs text-slate-400 ml-2 font-mono uppercase font-bold">Disbursed</span>
             </div>
-            <p className="text-[9px] text-slate-500 mt-2 font-mono">Autonomously returned to check-in wallets</p>
+            <p className="text-xs text-slate-500 mt-3 font-mono leading-relaxed">Autonomously returned to check-in wallets</p>
           </div>
 
           {/* Card 3: Settled Payouts */}
-          <div className="glass-panel rounded-xl p-5 border border-amber-500/10 shadow-[0_4px_20px_rgba(245,158,11,0.05)] relative overflow-hidden group">
+          <div className="glass-panel rounded-xl p-6 border border-amber-500/10 shadow-[0_4px_20px_rgba(245,158,11,0.05)] relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500/20 via-amber-500 to-amber-500/20"></div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <h4 className="text-xs md:text-sm font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
                 Settled Payouts
               </h4>
-              <span className="material-symbols-outlined text-amber-400 text-sm">account_balance_wallet</span>
+              <span className="material-symbols-outlined text-amber-400 text-base">account_balance_wallet</span>
             </div>
-            <div className="mt-3">
-              <span className="text-3xl font-extrabold text-white text-glow-amber">
+            <div className="mt-4">
+              <span className="text-4xl font-extrabold text-white text-glow-amber">
                 <AnimatedNumber value={totalSettled} />
               </span>
-              <span className="text-[10px] text-slate-500 ml-1.5 font-mono uppercase">Settled</span>
+              <span className="text-xs text-slate-400 ml-2 font-mono uppercase font-bold">Settled</span>
             </div>
-            <p className="text-[9px] text-slate-500 mt-2 font-mono">LLM approved payouts paid to vendors</p>
+            <p className="text-xs text-slate-500 mt-3 font-mono leading-relaxed">LLM approved payouts paid to vendors</p>
           </div>
         </div>
 
@@ -140,11 +140,11 @@ export function Dashboard({
           <div className="glass-panel rounded-xl p-6 border border-white/5 flex flex-col h-[520px]">
             <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
               <div>
-                <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                <h3 className="font-mono text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-amber-500 text-sm font-bold">receipt_long</span>
                   AI Audit Queue
                 </h3>
-                <p className="text-[10px] text-slate-500 font-mono mt-0.5">Click invoice card to review LLM reasoning</p>
+                <p className="text-xs text-slate-400 font-mono mt-0.5">Click invoice card to review LLM reasoning</p>
               </div>
               <div className="w-2.5 h-2.5 rounded-full bg-amber-500 status-dot-active" style={{ animationName: 'pulse-cyan', animationDuration: '2s' }}></div>
             </div>
@@ -153,7 +153,7 @@ export function Dashboard({
               {invoices.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-4">
                   <span className="material-symbols-outlined text-4xl text-slate-700 mb-2">description</span>
-                  <p className="text-xs text-slate-500 font-mono">No vendor invoices loaded in queue.</p>
+                  <p className="text-sm text-slate-500 font-mono">No vendor invoices loaded in queue.</p>
                 </div>
               ) : (
                 invoices.map((inv) => {
@@ -172,19 +172,19 @@ export function Dashboard({
                     >
                       <div className="flex justify-between items-center mb-2">
                         <div className="flex items-center gap-3">
-                          <div className="p-2 bg-white/5 rounded border border-white/5 text-slate-400 flex items-center justify-center">
-                            <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
+                          <div className="p-2.5 bg-white/5 rounded border border-white/5 text-slate-400 flex items-center justify-center">
+                            <span className="material-symbols-outlined text-base">picture_as_pdf</span>
                           </div>
                           <div>
-                            <p className="font-mono text-[11px] text-white truncate w-28 md:w-36">
+                            <p className="font-mono text-xs md:text-sm text-white truncate w-28 md:w-36 font-semibold">
                               {inv.file_url.split('/').pop() || "invoice.pdf"}
                             </p>
-                            <p className="font-mono text-[9px] text-slate-500 mt-0.5">
-                              Claim: <span className="font-bold text-slate-300">{Number(inv.amount).toFixed(2)} USDC</span>
+                            <p className="font-mono text-[11px] md:text-xs text-slate-400 mt-1">
+                              Claim: <span className="font-bold text-slate-200">{Number(inv.amount).toFixed(2)} USDC</span>
                             </p>
                           </div>
                         </div>
-                        <span className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider font-mono border ${
+                        <span className={`px-2.5 py-0.5 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider font-mono border ${
                           isPaid ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
                           isApproved ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' :
                           isRejected ? 'bg-red-500/10 text-red-400 border-red-500/20' :
@@ -207,8 +207,8 @@ export function Dashboard({
                       )}
 
                       {!isExpanded && inv.feedback && (
-                        <div className="mt-2 text-[9px] font-mono text-slate-500 truncate">
-                          &gt; click to view LLM reasoning audit report
+                        <div className="mt-2.5 text-[11px] md:text-xs font-mono text-slate-400">
+                          &gt; Click to view LLM reasoning audit report
                         </div>
                       )}
                     </div>

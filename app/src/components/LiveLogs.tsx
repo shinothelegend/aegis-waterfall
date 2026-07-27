@@ -51,14 +51,14 @@ export function LiveLogs({ decisions }: LiveLogsProps) {
       <div className="bg-[#080b16] border-b border-white/5 p-3 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-cyan-400 text-sm">terminal</span>
-          <span className="font-mono text-[11px] text-slate-300 font-bold uppercase tracking-wider">Autonomous Agent logs</span>
+          <span className="font-mono text-xs md:text-sm text-slate-200 font-bold uppercase tracking-wider">Autonomous Agent logs</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-cyan-400 status-dot-active"></div>
-          <span className="font-mono text-[9px] text-slate-400 uppercase font-bold">Live Link</span>
+          <span className="font-mono text-[11px] text-slate-400 uppercase font-bold">Live Link</span>
         </div>
       </div>
-      <div className="flex-1 p-4 bg-[#03050a]/95 overflow-y-auto terminal-scroll font-mono text-xs leading-relaxed text-slate-300">
+      <div className="flex-1 p-4 bg-[#03050a]/95 overflow-y-auto terminal-scroll font-mono text-xs md:text-sm leading-relaxed text-slate-300">
         <div className="mb-2 text-slate-600">
           <span className="text-slate-500">[12:00:01]</span> Daemon: Listening for on-chain events on Arc Testnet...
         </div>
@@ -77,45 +77,45 @@ export function LiveLogs({ decisions }: LiveLogsProps) {
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="flex justify-between items-center text-[9px] text-slate-500 mb-1.5">
+                  <div className="flex justify-between items-center text-[10px] md:text-xs text-slate-400 mb-1.5">
                     <span>[{new Date(dec.created_at).toLocaleTimeString()}]</span>
                     <div className="flex items-center gap-2">
-                      <span className="px-1.5 py-0.2 bg-cyan-950/20 text-cyan-400 border border-cyan-500/20 rounded-[4px] text-[8px] font-bold tracking-widest uppercase">
+                      <span className="px-1.5 py-0.2 bg-cyan-950/20 text-cyan-400 border border-cyan-500/20 rounded-[4px] text-[10px] font-bold tracking-widest uppercase">
                         🤖 Agent Sig
                       </span>
-                      <span className={`px-2 py-0.5 rounded border text-[8px] font-bold uppercase tracking-wider ${styles.badgeBg}`}>
+                      <span className={`px-2 py-0.5 rounded border text-[10px] md:text-xs font-bold uppercase tracking-wider ${styles.badgeBg}`}>
                         {dec.trigger_type}
                       </span>
                     </div>
                   </div>
-                  <p className="text-slate-200 text-[11px]">
+                  <p className="text-slate-200 text-xs md:text-sm">
                     <span className={styles.textStyle}>{styles.prefix}</span> {dec.reasoning}
                   </p>
                   {dec.tx_hash && (
-                    <div className="mt-2 flex items-center gap-1.5 bg-[#070b14] border border-white/5 rounded px-2 py-1 inline-flex max-w-full">
-                      <span className="text-slate-500 text-[9px] font-bold">PROOF:</span>
+                    <div className="mt-2 flex items-center gap-2 bg-[#070b14] border border-white/5 rounded px-2.5 py-1 inline-flex max-w-full">
+                      <span className="text-slate-400 text-[10px] md:text-xs font-bold">PROOF:</span>
                       <a 
                         href={`https://testnet.arcscan.app/tx/${dec.tx_hash}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-cyan-400 hover:text-cyan-300 font-mono text-[9px] truncate max-w-[150px] md:max-w-[200px]"
+                        className="text-cyan-400 hover:text-cyan-300 font-mono text-[11px] md:text-xs truncate max-w-[160px] md:max-w-[220px]"
                       >
                         {dec.tx_hash.substring(0, 10)}...{dec.tx_hash.slice(-8)}
                       </a>
                       <button 
                         onClick={() => handleCopyHash(dec.tx_hash, dec.id)}
-                        className="text-slate-500 hover:text-slate-300 transition-colors flex items-center"
+                        className="text-slate-400 hover:text-slate-200 transition-colors flex items-center"
                         title="Copy Tx Hash"
                       >
-                        <span className="material-symbols-outlined text-[11px]">{isCopied ? 'done' : 'content_copy'}</span>
+                        <span className="material-symbols-outlined text-xs md:text-sm">{isCopied ? 'done' : 'content_copy'}</span>
                       </button>
                       <a 
                         href={`https://testnet.arcscan.app/tx/${dec.tx_hash}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-500 hover:text-slate-300 flex items-center"
+                        className="text-slate-400 hover:text-slate-200 flex items-center"
                       >
-                        <span className="material-symbols-outlined text-[11px]">open_in_new</span>
+                        <span className="material-symbols-outlined text-xs md:text-sm">open_in_new</span>
                       </a>
                     </div>
                   )}
