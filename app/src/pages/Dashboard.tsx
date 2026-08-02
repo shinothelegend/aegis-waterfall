@@ -70,60 +70,60 @@ export function Dashboard({
         {/* Treasury metrics grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Card 1: Locked Escrow */}
-          <div className="glass-panel rounded-xl p-6 border border-cyan-500/10 shadow-[0_4px_20px_rgba(6,182,212,0.05)] relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500/20 via-cyan-500 to-cyan-500/20"></div>
+          <div className="glass-panel rounded-xl p-6 border border-zinc-800 shadow-2xl relative overflow-hidden group hover:border-zinc-500 transition-colors duration-300">
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-zinc-800 group-hover:bg-white transition-colors duration-300"></div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-xs md:text-sm font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-brand flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
                 Escrowed USDC
               </h4>
-              <span className="material-symbols-outlined text-cyan-400 text-base">lock</span>
+              <span className="material-symbols-outlined text-zinc-400 text-base">lock</span>
             </div>
             <div className="mt-4">
-              <span className="text-4xl font-extrabold text-white text-glow-cyan">
+              <span className="text-4xl font-extrabold text-white text-glow-cyan font-brand">
                 <AnimatedNumber value={totalEscrowed} />
               </span>
-              <span className="text-xs text-slate-400 ml-2 font-mono uppercase font-bold">LOCKED</span>
+              <span className="text-[10px] text-zinc-500 ml-2 font-brand uppercase font-bold">LOCKED</span>
             </div>
-            <p className="text-xs text-slate-500 mt-3 font-mono leading-relaxed">Held in treasury, pending check-in refund</p>
+            <p className="text-xs text-zinc-500 mt-3 font-brand leading-relaxed">Held in treasury, pending check-in</p>
           </div>
 
           {/* Card 2: Refunded */}
-          <div className="glass-panel rounded-xl p-6 border border-emerald-500/10 shadow-[0_4px_20px_rgba(16,185,129,0.05)] relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-500/20 via-emerald-500 to-emerald-500/20"></div>
+          <div className="glass-panel rounded-xl p-6 border border-zinc-800 shadow-2xl relative overflow-hidden group hover:border-zinc-500 transition-colors duration-300">
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-zinc-800 group-hover:bg-white transition-colors duration-300"></div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-xs md:text-sm font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-brand flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
                 Refunded USDC
               </h4>
-              <span className="material-symbols-outlined text-emerald-400 text-base">assignment_return</span>
+              <span className="material-symbols-outlined text-zinc-400 text-base">assignment_return</span>
             </div>
             <div className="mt-4">
-              <span className="text-4xl font-extrabold text-white text-glow-cyan" style={{ textShadow: "0 0 10px rgba(16,185,129,0.5)" }}>
+              <span className="text-4xl font-extrabold text-white text-glow-cyan font-brand">
                 <AnimatedNumber value={totalRefunded} />
               </span>
-              <span className="text-xs text-slate-400 ml-2 font-mono uppercase font-bold">Disbursed</span>
+              <span className="text-[10px] text-zinc-500 ml-2 font-brand uppercase font-bold">Disbursed</span>
             </div>
-            <p className="text-xs text-slate-500 mt-3 font-mono leading-relaxed">Autonomously returned to check-in wallets</p>
+            <p className="text-xs text-zinc-500 mt-3 font-brand leading-relaxed">Returned to checked-in wallets</p>
           </div>
 
           {/* Card 3: Settled Payouts */}
-          <div className="glass-panel rounded-xl p-6 border border-amber-500/10 shadow-[0_4px_20px_rgba(245,158,11,0.05)] relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500/20 via-amber-500 to-amber-500/20"></div>
+          <div className="glass-panel rounded-xl p-6 border border-zinc-800 shadow-2xl relative overflow-hidden group hover:border-zinc-500 transition-colors duration-300">
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-zinc-800 group-hover:bg-white transition-colors duration-300"></div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-xs md:text-sm font-bold text-slate-300 uppercase tracking-widest font-mono flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest font-brand flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-500"></span>
                 Settled Payouts
               </h4>
-              <span className="material-symbols-outlined text-amber-400 text-base">account_balance_wallet</span>
+              <span className="material-symbols-outlined text-zinc-400 text-base">account_balance_wallet</span>
             </div>
             <div className="mt-4">
-              <span className="text-4xl font-extrabold text-white text-glow-amber">
+              <span className="text-4xl font-extrabold text-white text-glow-cyan font-brand">
                 <AnimatedNumber value={totalSettled} />
               </span>
-              <span className="text-xs text-slate-400 ml-2 font-mono uppercase font-bold">Settled</span>
+              <span className="text-[10px] text-zinc-500 ml-2 font-brand uppercase font-bold">Settled</span>
             </div>
-            <p className="text-xs text-slate-500 mt-3 font-mono leading-relaxed">LLM approved payouts paid to vendors</p>
+            <p className="text-xs text-zinc-500 mt-3 font-brand leading-relaxed">Approved vendor payouts executed</p>
           </div>
         </div>
 
@@ -137,23 +137,23 @@ export function Dashboard({
           />
 
           {/* Audit Queue / LLM Invoice reviewers */}
-          <div className="glass-panel rounded-xl p-6 border border-white/5 flex flex-col h-[520px]">
-            <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
+          <div className="glass-panel rounded-xl p-6 border border-zinc-800 flex flex-col h-[520px]">
+            <div className="flex items-center justify-between pb-4 border-b border-zinc-900 mb-4">
               <div>
-                <h3 className="font-mono text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-amber-500 text-sm font-bold">receipt_long</span>
+                <h3 className="font-brand text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-white text-sm font-bold">receipt_long</span>
                   AI Audit Queue
                 </h3>
-                <p className="text-xs text-slate-400 font-mono mt-0.5">Click invoice card to review LLM reasoning</p>
+                <p className="text-[10px] text-zinc-500 font-brand mt-0.5">Click invoice card to review details</p>
               </div>
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-500 status-dot-active" style={{ animationName: 'pulse-cyan', animationDuration: '2s' }}></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
             </div>
 
             <div className="flex-1 flex flex-col gap-3 overflow-y-auto pr-1 terminal-scroll">
               {invoices.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-4">
-                  <span className="material-symbols-outlined text-4xl text-slate-700 mb-2">description</span>
-                  <p className="text-sm text-slate-500 font-mono">No vendor invoices loaded in queue.</p>
+                  <span className="material-symbols-outlined text-4xl text-zinc-800 mb-2">description</span>
+                  <p className="text-sm text-zinc-600 font-brand">No vendor invoices loaded in queue.</p>
                 </div>
               ) : (
                 invoices.map((inv) => {
@@ -165,30 +165,30 @@ export function Dashboard({
                   return (
                     <div 
                       key={inv.id} 
-                      className={`bg-[#05070d]/60 border rounded-xl p-4 transition-all duration-300 cursor-pointer ${
-                        isExpanded ? 'border-cyan-500/40 bg-[#070b14]' : 'border-white/5 hover:border-white/20'
+                      className={`bg-zinc-950/60 border rounded-xl p-4 transition-all duration-300 cursor-pointer ${
+                        isExpanded ? 'border-zinc-500 bg-zinc-900/50' : 'border-zinc-900 hover:border-zinc-800'
                       }`}
                       onClick={() => setActiveInvoiceId(isExpanded ? null : inv.id)}
                     >
                       <div className="flex justify-between items-center mb-2">
                         <div className="flex items-center gap-3">
-                          <div className="p-2.5 bg-white/5 rounded border border-white/5 text-slate-400 flex items-center justify-center">
+                          <div className="p-2 bg-zinc-900 rounded border border-zinc-800 text-zinc-400 flex items-center justify-center">
                             <span className="material-symbols-outlined text-base">picture_as_pdf</span>
                           </div>
                           <div>
-                            <p className="font-mono text-xs md:text-sm text-white truncate w-28 md:w-36 font-semibold">
+                            <p className="font-brand text-xs text-white truncate w-28 md:w-36 font-semibold">
                               {inv.file_url.split('/').pop() || "invoice.pdf"}
                             </p>
-                            <p className="font-mono text-[11px] md:text-xs text-slate-400 mt-1">
-                              Claim: <span className="font-bold text-slate-200">{Number(inv.amount).toFixed(2)} USDC</span>
+                            <p className="font-brand text-[10px] text-zinc-400 mt-1">
+                              Claim: <span className="font-bold text-white">{Number(inv.amount).toFixed(2)} USDC</span>
                             </p>
                           </div>
                         </div>
-                        <span className={`px-2.5 py-0.5 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider font-mono border ${
-                          isPaid ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                          isApproved ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' :
-                          isRejected ? 'bg-red-500/10 text-red-400 border-red-500/20' :
-                          'bg-white/5 text-slate-400 border-white/10'
+                        <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider font-brand border ${
+                          isPaid ? 'bg-white text-black border-white' :
+                          isApproved ? 'bg-white text-black border-white' :
+                          isRejected ? 'bg-zinc-900 text-zinc-500 border-zinc-800' :
+                          'bg-zinc-900 text-zinc-400 border-zinc-800'
                         }`}>
                           {inv.status}
                         </span>
@@ -207,7 +207,7 @@ export function Dashboard({
                       )}
 
                       {!isExpanded && inv.feedback && (
-                        <div className="mt-2.5 text-[11px] md:text-xs font-mono text-slate-400">
+                        <div className="mt-2.5 text-[10px] font-brand text-zinc-500">
                           &gt; Click to view LLM reasoning audit report
                         </div>
                       )}

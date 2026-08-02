@@ -134,8 +134,10 @@ type ViewType = 'landing' | 'dashboard' | 'events' | 'treasury' | 'audit';
 export default function App() {
   const { address: userAddress, isConnected } = useAccount();
   const [currentView, setCurrentView] = useState<ViewType>('landing');
+  const [startingView, setStartingView] = useState<ViewType>('dashboard');
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [transitionPhase, setTransitionPhase] = useState<'idle' | 'cascading' | 'fadeout'>('idle');
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   // Address Settings (Persistent in localStorage)
   const [treasuryAddress, setTreasuryAddress] = useState<string>(
@@ -416,7 +418,8 @@ export default function App() {
     });
   };
 
-  const handleLaunchApp = () => {
+  const handleLaunchApp = (view: ViewType = 'dashboard') => {
+    setStartingView(view);
     setTransitionPhase('cascading');
   };
 
@@ -428,68 +431,40 @@ export default function App() {
           isConnected={isConnected}
         />
       ) : (
-        <div className="min-h-screen bg-[#030712] text-[#cbd5e1] flex flex-col font-mono antialiased animate-fade-in">
+        <div className="min-h-screen bg-black text-white flex flex-col font-brand antialiased animate-fade-in">
           <Toaster position="bottom-right" />
           
           {/* Navbar */}
-          <Navbar onSync={fetchData} onNavigateToLanding={() => setCurrentView('landing')} />
-
-          {/* Contract Settings Section */}
-          <div className="bg-[#050814]/95 backdrop-blur border-b border-white/5 py-3 fixed top-16 w-full z-40 text-xs">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-amber-500 font-medium">
-                <span className="material-symbols-outlined text-sm">warning</span>
-                <span>Configure contract deployments to initiate settlements:</span>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <input 
-                  type="text" 
-                  placeholder="Treasury Address" 
-                  value={treasuryAddress}
-                  onChange={(e) => setTreasuryAddress(e.target.value)}
-                  className="bg-[#03050a] border border-white/10 rounded px-3 py-1 text-[11px] font-mono text-cyan-400 focus:outline-none focus:border-cyan-400"
-                />
-                <input 
-                  type="text" 
-                  placeholder="Attestation Address" 
-                  value={attestationAddress}
-                  onChange={(e) => setAttestationAddress(e.target.value)}
-                  className="bg-[#03050a] border border-white/10 rounded px-3 py-1 text-[11px] font-mono text-purple-400 focus:outline-none focus:border-purple-400"
-                />
-                <button 
-                  onClick={() => saveSettings(treasuryAddress, attestationAddress)}
-                  className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-4 py-1 rounded transition text-[11px] active:scale-95"
-                >
-                  Update Config
-                </button>
-              </div>
-            </div>
-          </div>
+          <Navbar 
+            onSync={fetchData} 
+            onNavigateToLanding={() => setCurrentView('landing')} 
+            onOpenSettings={() => setShowSettingsModal(true)}
+          />
 
           {/* Workspace Wrapper */}
-          <div className="flex flex-1 pt-28">
+          <div className="flex flex-1 pt-16">
             
             {/* Sidebar */}
             <Sidebar currentView={currentView} onChangeView={setCurrentView} />
 
             {/* Main Content Area */}
-            <main className="flex-1 ml-0 md:ml-64 p-6 md:p-10 pt-4 overflow-y-auto max-w-7xl w-full">
+            <main className="flex-1 ml-0 md:ml-64 p-6 md:p-10 pt-8 overflow-y-auto max-w-7xl w-full">
               
               <div className="mb-8">
-                <h1 className="text-2xl md:text-3xl font-extrabold text-white font-display">
+                <h1 className="text-3xl font-extrabold text-white font-display">
                   {currentView === 'dashboard' && "Mission Control"}
                   {currentView === 'events' && "Event Escrows"}
                   {currentView === 'treasury' && "Treasury Settlements"}
                   {currentView === 'audit' && "Badge Gallery & Audits"}
                 </h1>
-                <p className="text-xs text-slate-500 mt-2 uppercase tracking-wider font-mono">
+                <p className="text-[10px] text-zinc-500 mt-2 uppercase tracking-wider font-brand">
                   SYS.OP &gt; {currentView.toUpperCase()} VIEW
                 </p>
               </div>
 
               {/* VIEW: DASHBOARD */}
               {currentView === 'dashboard' && (
-                <div className="animate-fade-in-up">
+                <div className="animate-float-in">
                   <Dashboard
                     events={events}
                     decisions={decisions}
@@ -508,7 +483,7 @@ export default function App() {
 
               {/* VIEW: EVENTS CATALOG */}
               {currentView === 'events' && (
-                <div className="animate-fade-in-up">
+                <div className="animate-float-in">
                   <Events
                     events={events}
                     selectedEventId={selectedEventId}
@@ -529,14 +504,14 @@ export default function App() {
 
               {/* VIEW: PAYOUT SETTLEMENTS */}
               {currentView === 'treasury' && (
-                <div className="animate-fade-in-up">
+                <div className="animate-float-in">
                   <Treasury events={events} rsvps={rsvps} />
                 </div>
               )}
 
               {/* VIEW: SBT BADGE GALLERY */}
               {currentView === 'audit' && (
-                <div className="animate-fade-in-up">
+                <div className="animate-float-in">
                   <Audit 
                     attestationAddress={attestationAddress} 
                     loadingBadges={loadingBadges} 
@@ -549,6 +524,66 @@ export default function App() {
             </main>
           </div>
 
+          {/* Settings modal */}
+          {showSettingsModal && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
+              <div className="bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-lg p-6 relative text-white shadow-2xl">
+                <button 
+                  onClick={() => setShowSettingsModal(false)}
+                  className="absolute top-4 right-4 text-zinc-400 hover:text-white"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-widest flex items-center gap-2 font-brand">
+                  <span className="material-symbols-outlined">settings</span>
+                  Configure Deployments
+                </h3>
+                <p className="text-[10px] text-zinc-500 mb-6 uppercase tracking-wider font-brand">
+                  Set active smart contract configurations below
+                </p>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5 font-bold font-brand">USDC Treasury Address</label>
+                    <input 
+                      type="text" 
+                      placeholder="0x..." 
+                      value={treasuryAddress}
+                      onChange={(e) => setTreasuryAddress(e.target.value)}
+                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2.5 text-xs font-brand text-white focus:outline-none focus:border-white transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5 font-bold font-brand">Attestation Schema Address</label>
+                    <input 
+                      type="text" 
+                      placeholder="0x..." 
+                      value={attestationAddress}
+                      onChange={(e) => setAttestationAddress(e.target.value)}
+                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2.5 text-xs font-brand text-white focus:outline-none focus:border-white transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="mt-8 flex justify-end gap-3 font-brand text-xs">
+                  <button 
+                    onClick={() => setShowSettingsModal(false)}
+                    className="px-5 py-2.5 rounded-lg border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors uppercase tracking-wider"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={() => {
+                      saveSettings(treasuryAddress, attestationAddress);
+                      setShowSettingsModal(false);
+                    }}
+                    className="px-5 py-2.5 rounded-lg bg-white text-black hover:bg-zinc-200 transition-colors uppercase tracking-wider font-bold border border-white"
+                  >
+                    Update Config
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Global Attestation reveal modal overlay */}
           <SBTRevealModal 
             badge={revealBadge}
@@ -558,7 +593,7 @@ export default function App() {
           />
 
           {/* Footer */}
-          <footer className="border-t border-white/5 bg-[#050814]/80 backdrop-blur py-5 text-center text-[10px] text-slate-500 mt-auto">
+          <footer className="border-t border-zinc-900 bg-black py-5 text-center text-[10px] text-zinc-500 mt-auto font-brand uppercase tracking-wider">
             <p>&copy; 2026 Aegis Waterfall. Built for Encode x Arc "Programmable Money Hackathon". Deployed on Arc Testnet.</p>
           </footer>
         </div>
@@ -568,7 +603,7 @@ export default function App() {
         <WaterfallTransition
           phase={transitionPhase}
           onHalfway={() => {
-            setCurrentView('dashboard');
+            setCurrentView(startingView);
             setTransitionPhase('fadeout');
           }}
           onComplete={() => {

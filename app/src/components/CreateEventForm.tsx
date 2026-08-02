@@ -21,82 +21,82 @@ export function CreateEventForm({ onCreateEvent }: CreateEventFormProps) {
   };
 
   return (
-    <div className="glass-panel rounded-xl p-6 border border-white/10 relative">
-      <h3 className="font-title-md text-sm font-semibold text-white flex items-center gap-2 mb-4">
-        <span className="material-symbols-outlined text-purple-400">add_box</span>
+    <div className="glass-panel rounded-xl p-6 border border-zinc-800 relative font-brand">
+      <h3 className="text-xs font-bold text-white flex items-center gap-2 mb-4 uppercase tracking-wider">
+        <span className="material-symbols-outlined text-white text-base">add_box</span>
         Deploy Escrow Event
       </h3>
       
       <form onSubmit={handleSubmit} className="space-y-3 text-xs">
         <div>
-          <label className="block text-[9px] text-slate-500 font-bold mb-1 tracking-wider uppercase">Event Title</label>
+          <label className="block text-[9px] text-zinc-500 font-bold mb-1 tracking-wider uppercase">Event Title</label>
           <input 
             type="text" 
             placeholder="e.g. ETHGlobal Neo-Tokyo" 
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-[#050505] border border-white/10 rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-400"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-white font-brand"
             required
           />
         </div>
         <div>
-          <label className="block text-[9px] text-slate-500 font-bold mb-1 tracking-wider uppercase">Description</label>
+          <label className="block text-[9px] text-zinc-500 font-bold mb-1 tracking-wider uppercase">Description</label>
           <textarea 
             placeholder="Escrow parameters and venue info..." 
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             rows={2}
-            className="w-full bg-[#050505] border border-white/10 rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-400"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-white font-brand"
           />
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="block text-[9px] text-slate-500 font-bold mb-1 tracking-wider uppercase">Deposit (USDC)</label>
+            <label className="block text-[9px] text-zinc-500 font-bold mb-1 tracking-wider uppercase">Deposit (USDC)</label>
             <input 
               type="number" 
               placeholder="50" 
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full bg-[#050505] border border-white/10 rounded px-3 py-2 text-slate-200 focus:outline-none"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-white font-brand"
               required
             />
           </div>
           <div>
-            <label className="block text-[9px] text-slate-500 font-bold mb-1 tracking-wider uppercase">Hours Duration</label>
+            <label className="block text-[9px] text-zinc-500 font-bold mb-1 tracking-wider uppercase">Hours Duration</label>
             <input 
               type="number" 
               placeholder="2" 
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
-              className="w-full bg-[#050505] border border-white/10 rounded px-3 py-2 text-slate-200 focus:outline-none"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-white font-brand"
               required
             />
           </div>
         </div>
         <div>
-          <label className="block text-[9px] text-slate-500 font-bold mb-1 tracking-wider uppercase">Start Date & Time</label>
+          <label className="block text-[9px] text-zinc-500 font-bold mb-1 tracking-wider uppercase">Start Date & Time</label>
           <input 
             type="datetime-local" 
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full bg-[#050505] border border-white/10 rounded px-3 py-2 text-slate-400 focus:outline-none"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-400 focus:outline-none focus:border-white font-brand"
             required
           />
         </div>
         <div>
-          <label className="block text-[9px] text-slate-500 font-bold mb-1 tracking-wider uppercase">Location</label>
+          <label className="block text-[9px] text-zinc-500 font-bold mb-1 tracking-wider uppercase">Location</label>
           <input 
             type="text" 
             placeholder="e.g. Roppongi Hills, Tokyo" 
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full bg-[#050505] border border-white/10 rounded px-3 py-2 text-slate-200 focus:outline-none"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-white font-brand"
             required
           />
         </div>
         <button 
           type="submit"
-          className="w-full mt-3 bg-gradient-to-r from-cyan-500 to-purple-600 hover:brightness-110 text-black font-bold py-2.5 rounded transition shadow-lg active:scale-95"
+          className="w-full mt-3 bg-white hover:bg-zinc-200 text-black font-bold py-2.5 rounded transition active:scale-95 uppercase tracking-wider text-xs"
         >
           Deploy Escrow
         </button>

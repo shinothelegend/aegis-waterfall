@@ -13,28 +13,28 @@ export function LiveLogs({ decisions }: LiveLogsProps) {
   const getLogStyle = (dec: AgentDecision) => {
     if (dec.decision === 'rejected') {
       return {
-        badgeBg: 'bg-red-500/10 text-red-400 border-red-500/20',
-        textStyle: 'text-red-300',
+        badgeBg: 'bg-zinc-900 text-zinc-500 border-zinc-800',
+        textStyle: 'text-zinc-400',
         prefix: '🛑 [Blocked/Flagged]'
       };
     }
     if (dec.trigger_type === 'settle') {
       return {
-        badgeBg: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-        textStyle: 'text-purple-300',
+        badgeBg: 'bg-white text-black border-white',
+        textStyle: 'text-zinc-300 font-semibold',
         prefix: '🏦 [Settle Payout]'
       };
     }
     if (dec.trigger_type === 'invoice_approval') {
       return {
-        badgeBg: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-        textStyle: 'text-amber-300',
+        badgeBg: 'bg-white text-black border-white',
+        textStyle: 'text-zinc-300 font-semibold',
         prefix: '📄 [Invoice Audit]'
       };
     }
     return {
-      badgeBg: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-      textStyle: 'text-cyan-300',
+      badgeBg: 'bg-zinc-900 text-white border-zinc-800',
+      textStyle: 'text-zinc-300',
       prefix: '🤖 [Auto Refund]'
     };
   };
@@ -47,89 +47,89 @@ export function LiveLogs({ decisions }: LiveLogsProps) {
   };
 
   return (
-    <div className="glass-panel rounded-xl border border-white/5 flex flex-col h-[350px] overflow-hidden">
-      <div className="bg-[#080b16] border-b border-white/5 p-3 flex justify-between items-center">
+    <div className="glass-panel rounded-xl border border-zinc-800 flex flex-col h-[350px] overflow-hidden">
+      <div className="bg-zinc-950 border-b border-zinc-900 p-3 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-cyan-400 text-sm">terminal</span>
-          <span className="font-mono text-xs md:text-sm text-slate-200 font-bold uppercase tracking-wider">Autonomous Agent logs</span>
+          <span className="material-symbols-outlined text-white text-sm">terminal</span>
+          <span className="font-brand text-xs text-zinc-300 font-bold uppercase tracking-wider">Autonomous Agent logs</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400 status-dot-active"></div>
-          <span className="font-mono text-[11px] text-slate-400 uppercase font-bold">Live Link</span>
+          <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></div>
+          <span className="font-brand text-[10px] text-zinc-500 uppercase font-bold">Live Link</span>
         </div>
       </div>
-      <div className="flex-1 p-4 bg-[#03050a]/95 overflow-y-auto terminal-scroll font-mono text-xs md:text-sm leading-relaxed text-slate-300">
-        <div className="mb-2 text-slate-600">
-          <span className="text-slate-500">[12:00:01]</span> Daemon: Listening for on-chain events on Arc Testnet...
+      <div className="flex-1 p-4 bg-black/95 overflow-y-auto terminal-scroll font-brand text-xs leading-relaxed text-zinc-300">
+        <div className="mb-2 text-zinc-600">
+          <span className="text-zinc-700">[12:00:01]</span> Daemon: Listening for on-chain events on Arc Testnet...
         </div>
         
         <div className="space-y-4">
           <AnimatePresence initial={false}>
             {decisions.map((dec) => {
-              const styles = getLogStyle(dec);
-              const isCopied = copiedId === dec.id;
-              return (
-                <motion.div 
-                  key={dec.id} 
-                  className="pb-3 border-b border-white/5 last:border-0"
-                  initial={{ opacity: 0, y: -10, height: 0 }}
-                  animate={{ opacity: 1, y: 0, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="flex justify-between items-center text-[10px] md:text-xs text-slate-400 mb-1.5">
-                    <span>[{new Date(dec.created_at).toLocaleTimeString()}]</span>
-                    <div className="flex items-center gap-2">
-                      <span className="px-1.5 py-0.2 bg-cyan-950/20 text-cyan-400 border border-cyan-500/20 rounded-[4px] text-[10px] font-bold tracking-widest uppercase">
-                        🤖 Agent Sig
-                      </span>
-                      <span className={`px-2 py-0.5 rounded border text-[10px] md:text-xs font-bold uppercase tracking-wider ${styles.badgeBg}`}>
-                        {dec.trigger_type}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-slate-200 text-xs md:text-sm">
-                    <span className={styles.textStyle}>{styles.prefix}</span> {dec.reasoning}
-                  </p>
-                  {dec.tx_hash && (
-                    <div className="mt-2 flex items-center gap-2 bg-[#070b14] border border-white/5 rounded px-2.5 py-1 inline-flex max-w-full">
-                      <span className="text-slate-400 text-[10px] md:text-xs font-bold">PROOF:</span>
-                      <a 
-                        href={`https://testnet.arcscan.app/tx/${dec.tx_hash}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-cyan-400 hover:text-cyan-300 font-mono text-[11px] md:text-xs truncate max-w-[160px] md:max-w-[220px]"
-                      >
-                        {dec.tx_hash.substring(0, 10)}...{dec.tx_hash.slice(-8)}
-                      </a>
-                      <button 
-                        onClick={() => handleCopyHash(dec.tx_hash, dec.id)}
-                        className="text-slate-400 hover:text-slate-200 transition-colors flex items-center"
-                        title="Copy Tx Hash"
-                      >
-                        <span className="material-symbols-outlined text-xs md:text-sm">{isCopied ? 'done' : 'content_copy'}</span>
-                      </button>
-                      <a 
-                        href={`https://testnet.arcscan.app/tx/${dec.tx_hash}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-slate-400 hover:text-slate-200 flex items-center"
-                      >
-                        <span className="material-symbols-outlined text-xs md:text-sm">open_in_new</span>
-                      </a>
-                    </div>
-                  )}
-                </motion.div>
-              );
+               const styles = getLogStyle(dec);
+               const isCopied = copiedId === dec.id;
+               return (
+                 <motion.div 
+                   key={dec.id} 
+                   className="pb-3 border-b border-zinc-900 last:border-0"
+                   initial={{ opacity: 0, y: -10, height: 0 }}
+                   animate={{ opacity: 1, y: 0, height: 'auto' }}
+                   exit={{ opacity: 0, height: 0 }}
+                   transition={{ duration: 0.3 }}
+                 >
+                   <div className="flex justify-between items-center text-[10px] text-zinc-500 mb-1.5">
+                     <span>[{new Date(dec.created_at).toLocaleTimeString()}]</span>
+                     <div className="flex items-center gap-2">
+                       <span className="px-1.5 py-0.2 bg-zinc-900 text-zinc-400 border border-zinc-800 rounded-[4px] text-[10px] font-bold tracking-widest uppercase">
+                         🤖 Agent Sig
+                       </span>
+                       <span className={`px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wider ${styles.badgeBg}`}>
+                         {dec.trigger_type}
+                       </span>
+                     </div>
+                   </div>
+                   <p className="text-zinc-200 text-xs">
+                     <span className={styles.textStyle}>{styles.prefix}</span> {dec.reasoning}
+                   </p>
+                   {dec.tx_hash && (
+                     <div className="mt-2 flex items-center gap-2 bg-zinc-950 border border-zinc-900 rounded px-2.5 py-1 inline-flex max-w-full">
+                       <span className="text-zinc-500 text-[10px] font-bold">PROOF:</span>
+                       <a 
+                         href={`https://testnet.arcscan.app/tx/${dec.tx_hash}`} 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="text-zinc-300 hover:text-white underline font-brand text-[11px] truncate max-w-[160px] md:max-w-[220px]"
+                       >
+                         {dec.tx_hash.substring(0, 10)}...{dec.tx_hash.slice(-8)}
+                       </a>
+                       <button 
+                         onClick={() => handleCopyHash(dec.tx_hash, dec.id)}
+                         className="text-zinc-500 hover:text-zinc-300 transition-colors flex items-center"
+                         title="Copy Tx Hash"
+                       >
+                         <span className="material-symbols-outlined text-xs md:text-sm">{isCopied ? 'done' : 'content_copy'}</span>
+                       </button>
+                       <a 
+                         href={`https://testnet.arcscan.app/tx/${dec.tx_hash}`}
+                         target="_blank"
+                         rel="noreferrer"
+                         className="text-zinc-500 hover:text-zinc-300 flex items-center"
+                       >
+                         <span className="material-symbols-outlined text-xs md:text-sm">open_in_new</span>
+                       </a>
+                     </div>
+                   )}
+                 </motion.div>
+               );
             })}
           </AnimatePresence>
         </div>
 
         {decisions.length === 0 && (
-          <div className="text-slate-600 animate-pulse mt-4">&gt; Awaiting agent transactions... _</div>
+          <div className="text-zinc-700 animate-pulse mt-4">&gt; Awaiting agent transactions... _</div>
         )}
 
-        <div className="text-cyan-500/50 animate-pulse mt-3">&gt; Connection open, listening for check-ins... _</div>
+        <div className="text-zinc-600 animate-pulse mt-3">&gt; Connection open, listening for check-ins... _</div>
       </div>
     </div>
   );
